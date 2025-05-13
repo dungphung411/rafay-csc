@@ -12,7 +12,7 @@ resource "rafay_namespace" "tfdemonamespace" {
     placement {
       labels {
         key   = "rafay.dev/clusterName"
-        value = "tftestnamespace"
+        value = var.cluster_name
       }
     }
   }
