@@ -1,0 +1,16 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: Driver
+metadata:
+ name: custom-driver
+ project: mdp 
+spec:
+ config:
+  container:
+    cpuLimitMilli: "1024"
+    image: registry.dev.rafay-edge.net/rafay/custom-driver/fm-tf-custom:v4
+    kubeOptions:
+      namespace: rafay-system
+      serviceAccountName: fmac1
+      memoryLimitMb: "512"   
+  type: container
+status: {}
