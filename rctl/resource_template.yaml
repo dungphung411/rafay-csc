@@ -1,0 +1,152 @@
+{
+  "apiVersion": "eaas.envmgmt.io/v1",
+  "kind": "ResourceTemplate",
+  "metadata": {
+    "name": "res-gen-inference-vllm",
+    "annotations": {
+      "eaas.envmgmt.io/releaseversion": "v3.3"
+    },
+  },
+  "spec": {
+    "version": "v1.0",
+    "provider": "opentofu",
+    "providerOptions": {
+      "openTofu": {
+        "timeoutSeconds": 36000,
+        "volumes": [
+          {
+            "mountPath": "/tmp/test",
+            "enableBackupAndRestore": true
+          }
+        ],
+        "backendType": "system"
+      }
+    },
+    "repositoryOptions": {
+      "name": "mdp-csc-rafay",
+      "directoryPath": "/rctl/"
+    },
+    "variables": [
+      {
+        "name": "namespace",
+        "valueType": "expression",
+        "value": "$(environment.name)$",
+        "options": {
+          "description": "The namespace to deploy the cluster.",
+          "override": {
+            "type": "allowed"
+          }
+        }
+      },
+      {
+        "name": "model",
+        "valueType": "text",
+        "value": "meta-llama/Llama-3.2-1B",
+        "options": {
+          "required": true,
+          "override": {
+            "type": "restricted",
+            "restrictedValues": [
+              "meta-llama/Llama-3.2-1B",
+              "meta-llama/Llama-3.2-3B",
+              "meta-llama/Llama-3.1-8B",
+              "meta-llama/Llama-3.1-70B"
+            ]
+          }
+        }
+      },
+      {
+        "name": "cpu_limits",
+        "valueType": "text",
+        "value": "4",
+        "options": {
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      },
+      {
+        "name": "memory_requests",
+        "valueType": "text",
+        "value": "4Gi",
+        "options": {
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      },
+      {
+        "name": "memory_limits",
+        "valueType": "text",
+        "value": "6Gi",
+        "options": {
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      },
+      {
+        "name": "gpu_requests",
+        "valueType": "text",
+        "value": "1",
+        "options": {
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      },
+      {
+        "name": "gpu_limits",
+        "valueType": "text",
+        "value": "1",
+        "options": {
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      },
+      {
+        "name": "image",
+        "valueType": "text",
+        "value": "vllm/vllm-openai:latest",
+        "options": {
+          "description": "vllm image",
+          "required": true,
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      },
+      {
+        "name": "gpu_type",
+        "valueType": "text",
+        "value": "nvidia",
+        "options": {
+          "description": "GPU Vendor",
+          "override": {
+            "type": "notallowed"
+          }
+        }
+      }
+    ],
+    "sharing": {
+      "enabled": true,
+      "projects": [
+        {
+          "name": "*"
+        }
+      ]
+    },
+    "versionState": "active",
+    "artifactWorkflowHandler": {
+      "data": {
+        "config": {
+          "type": "container",
+          "container": {
+            "image": "registry.rafay-edge.net/rafay/repodriver:r3.3.1-2"
+          }
+        }
+      }
+    }
+  }
+}

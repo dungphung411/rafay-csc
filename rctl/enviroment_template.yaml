@@ -1,0 +1,20 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: EnvironmentTemplate
+metadata:
+  description: allow K8s version change 
+  name: k8s-version-change
+  project: mdp
+  description: self service for  requesting a new eks k8s cluster 
+  displayName: EKS cluster as a service
+  annotations: 
+      eaas.envmgmt.io/category: Developer Productivity
+  labels:
+    key : rctl
+spec: 
+  iconURL: https://static-00.iconduck.com/assets.00/amazon-eks-icon-455x512-0zairb3r.png
+  readme: "Developers...."
+  agents: 
+  - name: agent-rctl
+  hooks: {}
+  resource:
+   
